@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Interactive Solar System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="loadingOverlay"><div class="spinner"></div></div>
+  <div id="sidebar">
+    <h1>Solar System</h1>
+
+    <!-- Simulation -->
+    <div class="ctrl-section"><h2>Simulation</h2>
+      <div class="btn-row">
+        <button id="play" aria-label="Pause simulation">Pause</button>
+        <button id="reset" aria-label="Reset simulation">Reset</button>
+      </div>
+      <label>Days / sec <input id="speed" type="range" min="0.001" max="100000" step="0.001" value="1" aria-label="Simulation speed in days per second"></label>
+      <div class="btn-row">
+        <input id="speedNum" type="number" min="0.0001" max="100000" step="0.01" value="1" aria-label="Simulation speed numeric input">
+        <button id="speedDown" aria-label="Decrease speed by factor of 10">×0.1</button>
+        <button id="speedUp" aria-label="Increase speed by factor of 10">×10</button>
+      </div>
+      <label>Jump to date <input id="seekDate" type="date" aria-label="Jump simulation to specific date"></label>
+      <div class="btn-row tight-top">
+        <button id="sp1d" aria-label="Set speed to 1 day per second">1 d/s</button>
+        <button id="sp1w" aria-label="Set speed to 1 week per second">1 w/s</button>
+        <button id="sp1m" aria-label="Set speed to 1 month per second">1 mo/s</button>
+        <button id="sp1y" aria-label="Set speed to 1 year per second">1 yr/s</button>
+      </div>
+    </div>
+
+    <!-- View -->
+    <div class="ctrl-section"><h2>View</h2>
+      <label>Zoom <input id="zoom" type="range" min="0.1" max="8" step="0.01" value="1.5" aria-label="Camera zoom level"></label>
+      <div class="btn-row">
+        <input id="zoomNum" type="number" min="0.1" max="20" step="0.01" value="1.5" aria-label="Camera zoom numeric input">
+        <button id="zoomOut" aria-label="Zoom out">−</button>
+        <button id="zoomIn" aria-label="Zoom in">+</button>
+      </div>
+      <label>Planet scale <input id="planetScale" type="range" min="0.1" max="3" step="0.01" value="0.55" aria-label="Planet visual scale multiplier"></label>
+      <span class="val" id="planetScaleVal">0.55</span>
+      <label>Follow <select id="follow" aria-label="Follow a planet with the camera"><option value="">None</option></select></label>
+    </div>
+
+    <!-- Display -->
+    <div class="ctrl-section"><h2>Display</h2>
+      <label><input id="showOrbits" type="checkbox" checked> Orbit paths</label>
+      <label><input id="showRotation" type="checkbox" checked> Rotation axis</label>
+      <label><input id="showVelocity" type="checkbox"> Ecliptic grid</label>
+      <label><input id="showMoons" type="checkbox" checked> Moons</label>
+      <label><input id="showBelt" type="checkbox" checked> Asteroid belt</label>
+      <label><input id="showDwarfs" type="checkbox" checked> Dwarf planets</label>
+      <label><input id="showTrails" type="checkbox"> Trails</label>
+      <label>Trail length (days) <input id="trailLength" type="range" min="1" max="36501" step="1" value="90" aria-label="Trail length in days"></label>
+      <span class="val" id="trailVal">90</span>
+    </div>
+
+    <!-- Actions -->
+    <div class="ctrl-section"><h2>Actions</h2>
+      <div class="btn-row">
+        <button id="screenshot" aria-label="Take screenshot of the solar system">📷 Screenshot</button>
+        <button id="themeToggle" aria-label="Toggle light and dark theme">🌙 / ☀️</button>
+      </div>
+    </div>
+
+    <div id="time">Simulated date: <span id="date"></span></div>
+  </div>
+
+  <button id="toggleSidebar" aria-label="Toggle sidebar menu">☰</button>
+  <button id="helpBtn" aria-label="Show keyboard shortcuts">?</button>
+
+  <div id="canvasWrap">
+    <canvas id="c" role="img" aria-label="3D Solar System simulation"></canvas>
+    <canvas id="minimap" role="img" aria-label="2D minimap of the solar system"></canvas>
+  </div>
+  <div id="infoPanel"></div>
+  <div id="tooltip"></div>
+  <div id="helpOverlay">
+    <div class="help-card">
+      <h2>Keyboard Shortcuts</h2>
+      <dl>
+        <dt>Space</dt><dd>Play / Pause</dd>
+        <dt>+ / −</dt><dd>Zoom In / Out</dd>
+        <dt>[ / ]</dt><dd>Speed ×0.1 / ×10</dd>
+        <dt>Esc</dt><dd>Unfollow planet</dd>
+        <dt>?</dt><dd>Toggle this help</dd>
+        <dt>Click planet</dt><dd>Follow planet</dd>
+      </dl>
+      <button id="helpClose">Close</button>
+    </div>
+  </div>
+  <div id="webglOverlay" aria-live="assertive">
+    <p>WebGL context lost. Waiting for recovery...</p>
+  </div>
+  <script src="js/three.min.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/textures.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
